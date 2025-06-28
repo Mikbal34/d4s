@@ -36,46 +36,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Testimonials Slider
-let currentTestimonial = 0;
-const testimonials = document.querySelectorAll('.testimonial');
-const indicators = document.querySelectorAll('.indicator');
-
-function showTestimonial(index) {
-    // Hide all testimonials
-    testimonials.forEach(testimonial => {
-        testimonial.classList.remove('active');
-    });
-    
-    // Remove active class from all indicators
-    indicators.forEach(indicator => {
-        indicator.classList.remove('active');
-    });
-    
-    // Show current testimonial and indicator
-    if (testimonials[index] && indicators[index]) {
-        testimonials[index].classList.add('active');
-        indicators[index].classList.add('active');
-    }
-}
-
-// Auto-play testimonials
-function nextTestimonial() {
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    showTestimonial(currentTestimonial);
-}
-
-// Start auto-play
-setInterval(nextTestimonial, 5000);
-
-// Manual navigation
-indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-        currentTestimonial = index;
-        showTestimonial(currentTestimonial);
-    });
-});
-
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -93,7 +53,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.service-card, .team-member, .stat, .partner-logo');
+    const animateElements = document.querySelectorAll('.service-card, .team-member');
     
     animateElements.forEach(el => {
         el.style.opacity = '0';
@@ -101,45 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'all 0.6s ease';
         observer.observe(el);
     });
-});
-
-// Counter Animation for Stats
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    function updateCounter() {
-        start += increment;
-        if (start < target) {
-            element.textContent = Math.ceil(start) + (target === 100 ? '%' : '+');
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target + (target === 100 ? '%' : '+');
-        }
-    }
-    
-    updateCounter();
-}
-
-// Start counter animation when stats section is visible
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const statNumbers = entry.target.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                animateCounter(stat, target);
-            });
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const statsSection = document.querySelector('.stats');
-    if (statsSection) {
-        statsObserver.observe(statsSection);
-    }
 });
 
 // Contact Form Handling
