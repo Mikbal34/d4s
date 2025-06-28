@@ -65,6 +65,16 @@ body {
     letter-spacing: -0.8px;
 }
 
+.logo-img {
+    height: 40px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
